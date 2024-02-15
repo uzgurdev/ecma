@@ -7,3 +7,19 @@
   outline: none;
   box-sizing: border-box;
 }
+
+.mantine-Table-th {
+  @apply border-b border-gray-200 bg-[#353945] py-[12px] px-[18px] text-white;
+}
+
+.mantine-Table-td {
+  @apply px-4 py-2 text-center;
+}
+
+.mantine-Table-th:nth-child(2) {
+  @apply text-left;
+}
+
+.mantine-Table-td:nth-child(2) {
+  @apply text-left;
+}

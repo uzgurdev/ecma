@@ -1,11 +1,31 @@
 import React from "react";
-import { TextInput } from "@mantine/core";
-import Input from "./input";
 import { DeleteIcon, DnDIcon } from "../assets";
+import { UseReduce } from "../hooks";
+import { useParams } from "react-router-dom";
+import { Types } from "../moduls/specialization";
 
-const Form = () => {
+interface FormProps {
+  Courses: Types.IEntity.Courses[];
+  onDel: (courseID: number) => void;
+  onClear(): void;
+}
+
+const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
+  const { specializationID } = useParams();
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
+  const [courses, setCourses] = React.useState<Types.IEntity.Courses[]>([
+    ...Courses,
+  ]);
+  const { state, dispatch } = UseReduce();
+
+  React.useEffect(() => {
+    const specialization = state.find((s) => s.id === Number(specializationID));
+    // console.log("specialization: ", specialization);
+    if (specialization) {
+      setCourses(specialization.courses);
+    }
+  }, [specializationID]);
 
   return (
     <div
@@ -44,89 +64,32 @@ const Form = () => {
         </div>
       </form>
 
-      <div className="grid p-[24px] gap-3 overflow-y-auto h-[360px]">
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
+      <ul className="p-[24px] flex flex-col gap-3 place-items-start overflow-y-auto h-[360px]">
+        {Courses.map((course) => (
+          <li
+            className="w-full flex items-center justify-between"
+            key={course.title}
+          >
+            <div className="flex items-center gap-[15px]">
+              <DnDIcon /> {course.title}
+            </div>
 
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
-
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
-
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
-
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
-
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
-
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
-
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-
-        <div className="w-full flex items-center justify-between">
-          <div className="flex items-center gap-[15px]">
-            <DnDIcon /> React
-          </div>
-
-          <button className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg">
-            <DeleteIcon />
-          </button>
-        </div>
-      </div>
+            <button
+              className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg"
+              onClick={() => {
+                onDel(course.id);
+              }}
+            >
+              <DeleteIcon />
+            </button>
+          </li>
+        ))}
+      </ul>
       <div className="border-t py-[10px] px-[24px] flex items-end justify-end w-full bg-white">
-        <button className="h-10 w-[91px] bg-[#3773ff76] rounded-lg text-[#3772FF]">
+        <button
+          className="h-10 w-[91px] bg-[#3773ff76] rounded-lg text-[#3772FF]"
+          onClick={onClear}
+        >
           Clear All
         </button>
       </div>

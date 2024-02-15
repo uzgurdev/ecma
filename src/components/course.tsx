@@ -1,14 +1,34 @@
 import React from "react";
 import { AddIcon, ExitIcon } from "../assets";
+import { Types } from "../moduls/specialization";
+import { useParams } from "react-router-dom";
+import { UseReduce } from "../hooks";
 
 interface CourseProps {
-  id: string;
-  name: string;
-  onAdd(id: string): void;
+  course: Types.IEntity.Courses;
+  onAdd(course: Types.IEntity.Courses): void;
+  onDel(courseID: number): void;
 }
 
-const Course: React.FC<CourseProps> = ({ id, name, onAdd }) => {
-  const [isAdded, setIsAdded] = React.useState(false);
+const Course: React.FC<CourseProps> = ({ course, onAdd, onDel }) => {
+  const { specializationID } = useParams();
+  const { state, dispatch } = UseReduce();
+  const [isAdded, setIsAdded] = React.useState(course.isAdded);
+
+  React.useEffect(() => {
+    setIsAdded(course.isAdded || false);
+  }, [course.isAdded]);
+
+  React.useEffect(() => {
+    const specialization = state.find((s) => s.id === Number(specializationID));
+    if (specialization) {
+      const isCourseAdded = specialization.courses.some(
+        (c) => c.id === course.id
+      );
+      setIsAdded(isCourseAdded);
+    }
+  }, []);
+
   const classes =
     "h-[80px] w-[30px] rounded-l-[900px] rounded-r-[20px] bg-[#45B26B]";
   const classesExit =
@@ -19,8 +39,12 @@ const Course: React.FC<CourseProps> = ({ id, name, onAdd }) => {
     "w-[264px] h-[87px] bg-[#23262F] flex items-center justify-between pl-[24px] pr-1 relative rounded-[8px]";
 
   const handleClick = () => {
-    setIsAdded((prev) => !prev);
-    onAdd(id);
+    if (!isAdded) {
+      onAdd(course);
+      setIsAdded(true);
+    } else {
+      onDel(course.id);
+    }
   };
 
   return (
@@ -30,7 +54,7 @@ const Course: React.FC<CourseProps> = ({ id, name, onAdd }) => {
           isAdded ? "text-[#B1B5C3] text-[18px]" : "text-white text-[18px]"
         }
       >
-        {name}
+        {course.title}
       </h2>
       <button
         className={!isAdded ? classes : classesExit}

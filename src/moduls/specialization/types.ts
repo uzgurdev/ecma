@@ -2,6 +2,7 @@ export namespace IEntity {
   export type Courses = {
     id: number;
     title: string;
+    isAdded: boolean;
   };
 
   export interface Specialization {
@@ -12,4 +13,9 @@ export namespace IEntity {
     info: "DEGREE" | "NO DEGREE";
     status: "Active" | "No Active";
   }
+}
+
+export interface IContext {
+  state: IEntity.Specialization[];
+  dispatch: React.Dispatch<any>;
 }
