@@ -14,9 +14,7 @@ function TableElm({ elements, handleID }: TableElmProps) {
       <Table.Tr key={element.name + element.status}>
         <Table.Td>{element.id + 1}</Table.Td>
         <Table.Td>
-          <Link to={`/${element.id}`}>
-            <button onClick={() => handleID(element.id)}>{element.name}</button>
-          </Link>
+          <button onClick={() => handleID(element.id)}>{element.name}</button>
         </Table.Td>
         <Table.Td>
           <span className={element.info === "DEGREE" ? "" : "text-[#777E90]"}>
