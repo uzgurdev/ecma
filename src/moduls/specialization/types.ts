@@ -13,3 +13,8 @@ export namespace IEntity {
     status: "Active" | "No Active";
   }
 }
+
+export interface IContext {
+  state: IEntity.Specialization[];
+  dispatch: React.Dispatch<any>;
+}

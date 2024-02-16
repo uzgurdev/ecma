@@ -2,20 +2,54 @@ import { IEntity } from "./types";
 
 const specializations: IEntity.Specialization[] = [
   {
-    id: 1,
+    id: 0,
     name: "Computer Science",
     description: "This is the description of Computer Science",
     courses: [
       {
-        id: 1,
-        title: "Intro to Computer Science",
+        id: 0,
+        title: "Java Development",
       },
       {
-        id: 2,
-        title: "Intro to Programming",
+        id: 1,
+        title: "Flutter",
       },
     ],
     info: "DEGREE",
+    status: "Active",
+  },
+  {
+    id: 1,
+    name: "Foundation",
+    description: "This is the description of Computer Science",
+    courses: [
+      {
+        id: 0,
+        title: "Java Development",
+      },
+      {
+        id: 10,
+        title: "React",
+      },
+    ],
+    info: "DEGREE",
+    status: "No Active",
+  },
+  {
+    id: 2,
+    name: "Foundation",
+    description: "This is the description of Computer Science",
+    courses: [
+      {
+        id: 0,
+        title: "Java Development",
+      },
+      {
+        id: 1,
+        title: "Flutter",
+      },
+    ],
+    info: "NO DEGREE",
     status: "Active",
   },
 ];
@@ -107,7 +141,7 @@ const courses: IEntity.Courses[] = [
   },
 ];
 
-const courseReducer = (state: IEntity.Specialization[], action: any) => {
+const reducer = (state: IEntity.Specialization[], action: any) => {
   switch (action.type) {
     case "ADD":
       return state.map((specialization) => {
@@ -133,6 +167,20 @@ const courseReducer = (state: IEntity.Specialization[], action: any) => {
         return specialization;
       });
 
+    case "UPDATE_SPECIALIZATION":
+      return state.map((specialization) => {
+        if (specialization.id === action.payload.specializationId) {
+          return {
+            ...specialization,
+            name: action.payload.title,
+            description: action.payload.description,
+            info: action.payload.info,
+            status: action.payload.status,
+          };
+        }
+        return specialization;
+      });
+
     case "RESET":
       return state.map((specialization) => {
         const oldCourses = [...specialization.courses];
@@ -148,37 +196,4 @@ const courseReducer = (state: IEntity.Specialization[], action: any) => {
   }
 };
 
-const specReducer = (state: IEntity.Specialization[], action: any) => {
-  switch (action.type) {
-    case "ADD":
-      return state.map((specialization) => {
-        if (specialization.id === action.payload.specializationId) {
-          return {
-            ...specialization,
-            name: action.payload.title,
-            description: action.payload.description,
-            info: action.payload.info,
-            status: action.payload.status,
-          };
-        }
-        return specialization;
-      });
-
-    case "UPDATE_NAME_AND_DESCRIPTION":
-      return state.map((specialization) => {
-        if (specialization.id === action.payload.specializationId) {
-          return {
-            ...specialization,
-            name: action.payload.title,
-            description: action.payload.description,
-          };
-        }
-        return specialization;
-      });
-
-    default:
-      return state;
-  }
-};
-
-export { courses, specializations, courseReducer, specReducer };
+export { courses, specializations, reducer };
