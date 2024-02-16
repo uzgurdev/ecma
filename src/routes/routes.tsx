@@ -9,7 +9,6 @@ const Routes = () => {
         <Route path="/">
           <Route index element={<App />} />
           <Route path="edit/:specializationID" element={<Single />} />
-          <Route path=":specializationID" element={<Main />} />
         </Route>
       </Switch>
     </div>
