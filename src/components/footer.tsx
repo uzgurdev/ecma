@@ -20,7 +20,10 @@ const Footer: React.FC<FooterProps> = ({ values }) => {
   const [active, setActive] = React.useState(false);
 
   function handleSave() {
-    if (values!.name === "" && values!.description === "") return;
+    if (values!.name === "" && values!.description === "") {
+      toast.error("Please enter at least a name");
+      return;
+    }
 
     if (specializationID === ":new") {
       console.log("if ID: ", specializationID);

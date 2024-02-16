@@ -1,6 +1,6 @@
+import React from "react";
 import { Table } from "@mantine/core";
 import { Types } from "../moduls/specialization";
-import { Link } from "react-router-dom";
 import Options from "./options";
 
 interface TableElmProps {
@@ -56,9 +56,9 @@ function TableElm({ elements, handleID }: TableElmProps) {
           {elements.length !== 0 ? (
             rows
           ) : (
-            <>
+            <div className="w-full h-[10vh] grid place-items-center">
               <h1>No Data Found</h1>
-            </>
+            </div>
           )}
         </Table.Tbody>
       </Table>
@@ -66,4 +66,4 @@ function TableElm({ elements, handleID }: TableElmProps) {
   );
 }
 
-export default TableElm;
+export default React.memo(TableElm);

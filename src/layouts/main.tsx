@@ -30,10 +30,10 @@ const Main: React.FC<MainProps> = ({ id }) => {
         </h2>
       </div>
       {courses.length > 0 &&
-        courses.map((course) => (
+        courses.map((course, idx) => (
           <ul>
             <li className="text-[#23262F] text-[14px] font-medium h-[40px] py-[10px] px-4">
-              <span>{course.id + 1}</span> {course.title}
+              <span>{idx + 1}</span> {course.title}
             </li>
           </ul>
         ))}

@@ -147,16 +147,15 @@ const reducer = (
 ) => {
   switch (action.type) {
     case "ADD":
-      state.push({
-        id: state.length + 1,
+      const newItem: IEntity.Specialization = {
+        id: state.length,
         name: action.payload.title,
         description: action.payload.description,
         info: action.payload.info,
         status: action.payload.status,
         courses: [...action.payload.course],
-      });
-      console.log("updated state: ", state);
-      return state;
+      };
+      return [...state, newItem];
 
     case "EDIT":
       return state.map((specialization) => {

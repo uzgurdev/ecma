@@ -8,7 +8,12 @@ import {
 } from "../assets/index";
 import { useNavigate } from "react-router-dom";
 
-const SearchBar = () => {
+interface SearchBarProps {
+  value?: string;
+  onQuery?: (q: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ value, onQuery }) => {
   const navigate = useNavigate();
 
   return (
@@ -21,6 +26,8 @@ const SearchBar = () => {
               className="pl-10 pr-4 py-2 w-full"
               type="search"
               placeholder="Search..."
+              value={value}
+              onChange={(e) => onQuery!(e.target.value)}
             />
             <button className="bg-gray-200 px-4 py-2 rounded-r-lg">
               <Chevrodown className="h-5 w-5 text-gray-600" />
