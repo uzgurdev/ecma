@@ -1,4 +1,4 @@
-import { IEntity } from "./types";
+import { IDispatch, IEntity } from "./types";
 
 const specializations: IEntity.Specialization[] = [
   {
@@ -141,45 +141,43 @@ const courses: IEntity.Courses[] = [
   },
 ];
 
-const reducer = (state: IEntity.Specialization[], action: any) => {
+const reducer = (
+  state: IEntity.Specialization[],
+  action: IDispatch.ADD | IDispatch.Edit | IDispatch.Remove | IDispatch.Reset
+) => {
   switch (action.type) {
     case "ADD":
-      return state.map((specialization) => {
-        if (specialization.id === action.payload.specializationId) {
-          return {
-            ...specialization,
-            courses: [...specialization.courses, action.payload.course],
-          };
-        }
-        return specialization;
+      state.push({
+        id: state.length + 1,
+        name: action.payload.title,
+        description: action.payload.description,
+        info: action.payload.info,
+        status: action.payload.status,
+        courses: [...action.payload.course],
       });
+      console.log("updated state: ", state);
+      return state;
 
-    case "REMOVE":
+    case "EDIT":
       return state.map((specialization) => {
-        if (specialization.id === action.payload.specializationId) {
-          return {
-            ...specialization,
-            courses: specialization.courses.filter(
-              (course) => course.id !== action.payload.courseId
-            ),
-          };
-        }
-        return specialization;
-      });
-
-    case "UPDATE_SPECIALIZATION":
-      return state.map((specialization) => {
-        if (specialization.id === action.payload.specializationId) {
+        if (specialization.id === action.payload.ID) {
           return {
             ...specialization,
             name: action.payload.title,
             description: action.payload.description,
             info: action.payload.info,
             status: action.payload.status,
+            courses: [...specialization.courses, action.payload.course],
           };
         }
+        console.log("updated specialization: ", specialization);
         return specialization;
       });
+
+    case "REMOVE":
+      return state.filter(
+        (specialization) => specialization.id !== action.payload.ID
+      );
 
     case "RESET":
       return state.map((specialization) => {

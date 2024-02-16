@@ -16,3 +16,4 @@ export { default as SearchIcon } from "./search";
 export { default as PlusIcon } from "./plus";
 export { default as OverIcon } from "./over";
 export { default as SquareIcon } from "./square";
+export { default as OptionsIcon } from "./options";

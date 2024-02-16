@@ -1,6 +1,7 @@
 import { Table } from "@mantine/core";
 import { Types } from "../moduls/specialization";
 import { Link } from "react-router-dom";
+import Options from "./options";
 
 interface TableElmProps {
   elements: Types.IEntity.Specialization[];
@@ -8,27 +9,31 @@ interface TableElmProps {
 
 function TableElm({ elements }: TableElmProps) {
   const rows = elements.map((element) => (
-    <Table.Tr key={element.name + element.status}>
-      <Table.Td>{element.id + 1}</Table.Td>
-      <Table.Td>
-        <Link to={`/${element.id}`}>{element.name}</Link>
-      </Table.Td>
-      <Table.Td>
-        <span className={element.info === "DEGREE" ? "" : "text-[#777E90]"}>
-          {element.info}
-        </span>
-      </Table.Td>
-      <Table.Td>
-        <span
-          className={`w-[70px] p-2 bg-[${
-            element.status === "Active" ? "#45B26B" : "#EF466F"
-          }] text-[#FCFCFD] rounded-md`}
-        >
-          {element.status}
-        </span>
-      </Table.Td>
-      <Table.Td>{element.status}</Table.Td>
-    </Table.Tr>
+    <>
+      <Table.Tr key={element.name + element.status}>
+        <Table.Td>{element.id + 1}</Table.Td>
+        <Table.Td>
+          <Link to={`/${element.id}`}>{element.name}</Link>
+        </Table.Td>
+        <Table.Td>
+          <span className={element.info === "DEGREE" ? "" : "text-[#777E90]"}>
+            {element.info}
+          </span>
+        </Table.Td>
+        <Table.Td>
+          <span
+            className={`w-[70px] p-2 bg-[${
+              element.status === "Active" ? "#45B26B" : "#EF466F"
+            }] text-[#FCFCFD] rounded-md`}
+          >
+            {element.status}
+          </span>
+        </Table.Td>
+        <Table.Td>
+          <Options id={element.id} />
+        </Table.Td>
+      </Table.Tr>
+    </>
   ));
 
   return (

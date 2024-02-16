@@ -1,7 +1,6 @@
-import React from "react";
 import { Route, Routes as Switch } from "react-router-dom";
 import App from "../App";
-import { Single } from "../layouts";
+import { Main, Single } from "../layouts";
 
 const Routes = () => {
   return (
@@ -9,7 +8,8 @@ const Routes = () => {
       <Switch>
         <Route path="/">
           <Route index element={<App />} />
-          <Route path=":specializationID" element={<Single />} />
+          <Route path="edit/:specializationID" element={<Single />} />
+          <Route path=":specializationID" element={<Main />} />
         </Route>
       </Switch>
     </div>

@@ -13,7 +13,7 @@
 }
 
 .mantine-Table-td {
-  @apply px-4 py-2 text-center;
+  @apply px-4 py-2 text-center relative;
 }
 
 .mantine-Table-th:nth-child(2) {

@@ -5,15 +5,18 @@ import { useParams } from "react-router-dom";
 import { Types } from "../moduls/specialization";
 
 interface FormProps {
+  name?: string;
+  description?: string;
+  setName?: React.Dispatch<React.SetStateAction<string>>;
+  setDescription?: React.Dispatch<React.SetStateAction<string>>;
   Courses: Types.IEntity.Courses[];
   onDel: (courseID: number) => void;
   onClear(): void;
 }
 
-const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
+const Form: React.FC<FormProps> = ({ Courses, onDel, onClear, name, setName,description, setDescription }) => {
   const { specializationID } = useParams();
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  
   const [courses, setCourses] = React.useState<Types.IEntity.Courses[]>([
     ...Courses,
   ]);
@@ -21,10 +24,9 @@ const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
 
   React.useEffect(() => {
     const specialization = state.find((s) => s.id === Number(specializationID));
-    // console.log("specialization: ", specialization);
     if (specialization) {
-      setName(specialization.name);
-      setDescription(specialization.description);
+      setName!(specialization.name);
+      setDescription!(specialization.description);
       setCourses(specialization.courses);
     }
   }, [specializationID, Courses]);
@@ -47,7 +49,7 @@ const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
             type="text"
             value={name}
             className={`border py-[12px] px-[14px] w-full h-[40px] rounded-xl text-[18px] font-normal`}
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setName!(e.target.value)}
           />
         </div>
         <div className="flex flex-col gap-[5px]">
@@ -61,7 +63,7 @@ const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
             id="description"
             value={description}
             className="border py-[12px] px-[14px] w-full h-[100px] rounded-xl text-[18px] font-normal resize-none"
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => setDescription!(e.target.value)}
           />
         </div>
       </form>
@@ -79,7 +81,6 @@ const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
             <button
               className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg"
               onClick={() => {
-                console.log("course deleted: ", course.title);
                 onDel(course.id);
               }}
             >
