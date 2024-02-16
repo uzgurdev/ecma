@@ -23,9 +23,11 @@ const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
     const specialization = state.find((s) => s.id === Number(specializationID));
     // console.log("specialization: ", specialization);
     if (specialization) {
+      setName(specialization.name);
+      setDescription(specialization.description);
       setCourses(specialization.courses);
     }
-  }, [specializationID]);
+  }, [specializationID, Courses]);
 
   return (
     <div
@@ -77,6 +79,7 @@ const Form: React.FC<FormProps> = ({ Courses, onDel, onClear }) => {
             <button
               className="bg-[#ef46705a] w-8 h-8 grid place-items-center rounded-lg"
               onClick={() => {
+                console.log("course deleted: ", course.title);
                 onDel(course.id);
               }}
             >

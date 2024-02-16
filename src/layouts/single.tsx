@@ -27,9 +27,7 @@ const Single = () => {
 
   function onRemCourses(courseID: number) {
     setNewCourses((prevCourses) =>
-      prevCourses.map((course) =>
-        course.id === courseID ? { ...course, isAdded: false } : course
-      )
+      prevCourses.filter((c) => c.id !== courseID)
     );
   }
 

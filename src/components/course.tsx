@@ -13,11 +13,7 @@ interface CourseProps {
 const Course: React.FC<CourseProps> = ({ course, onAdd, onDel }) => {
   const { specializationID } = useParams();
   const { state, dispatch } = UseReduce();
-  const [isAdded, setIsAdded] = React.useState(course.isAdded);
-
-  React.useEffect(() => {
-    setIsAdded(course.isAdded || false);
-  }, [course.isAdded]);
+  const [isAdded, setIsAdded] = React.useState(false);
 
   React.useEffect(() => {
     const specialization = state.find((s) => s.id === Number(specializationID));
@@ -44,6 +40,7 @@ const Course: React.FC<CourseProps> = ({ course, onAdd, onDel }) => {
       setIsAdded(true);
     } else {
       onDel(course.id);
+      setIsAdded(false);
     }
   };
 

@@ -2,7 +2,6 @@ export namespace IEntity {
   export type Courses = {
     id: number;
     title: string;
-    isAdded: boolean;
   };
 
   export interface Specialization {
