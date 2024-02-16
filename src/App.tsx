@@ -33,7 +33,12 @@ function App() {
       <Barmenu />
       <SearchBar value={query} onQuery={handleSearch} />
       <div className="w-full mt-[8rem] flex min-h-screen items-start gap-4">
-        <TableElm elements={data.filter(d => d.name.includes(query.toLowerCase()))} handleID={onID} />
+        <TableElm
+          elements={data.filter((d) =>
+            d.name.toLocaleLowerCase().includes(query.toLowerCase())
+          )}
+          handleID={onID}
+        />
         <Main id={ID!} />
       </div>
     </div>
